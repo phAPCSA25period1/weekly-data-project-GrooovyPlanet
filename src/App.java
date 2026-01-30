@@ -1,76 +1,76 @@
 import java.util.Scanner;
 
 /**
- * Instructions:
- * - Complete the WeeklyData.java class first.
- * - Use this App class to collect user input and test your WeeklyData methods.
- * - Follow all TODOs carefully.
- * - Do NOT hard-code values — use loops and method calls.
+ * Budget Planner App
+ * Tracks weekly spending and provides analysis.
  */
 public class App {
 
     public static void main(String[] args) {
 
-        // -------------------------------------------------------------
-        // TODO 1: Create a Scanner for user input
-        // -------------------------------------------------------------
+        // Create Scanner
+        Scanner input = new Scanner(System.in);
 
+        // Program introduction
+        System.out.println("=====================================");
+        System.out.println("        Weekly Budget Planner        ");
+        System.out.println("=====================================");
+        System.out.print("Enter your weekly budget goal: $");
 
-        // -------------------------------------------------------------
-        // TODO 2: Give information about your program
-        //         Ask the user about their goals (if applicable)
-        // -------------------------------------------------------------
+        double budgetGoal = input.nextDouble();
 
+        // Validate budget goal
+        while (budgetGoal < 0) {
+            System.out.print("Budget cannot be negative. Enter again: $");
+            budgetGoal = input.nextDouble();
+        }
 
-        // -------------------------------------------------------------
-        // TODO 3: Create an array to hold 7 days of data
-        //         Use an appropriate data type (int or double)
-        //         Name the array weekData
-        // -------------------------------------------------------------
+        // Create array for 7 days
+        double[] weekData = new double[7];
 
+        // Collect spending for each day
+        for (int i = 0; i < weekData.length; i++) {
+            System.out.print("Enter spending for day " + (i + 1) + ": $");
+            double dailyAmount = input.nextDouble();
 
-        // -------------------------------------------------------------
-        // TODO 4: Use a for loop to collect data for each day of the week
-        //         Prompt example:
-        //         "Enter <data type> for day X: "
-        //
-        //         Include input validation:
-        //         - Use a while loop to prevent negative values
-        //         - Re-prompt if the value is invalid
-        // -------------------------------------------------------------
+            while (dailyAmount < 0) {
+                System.out.print("Spending cannot be negative. Enter again: $");
+                dailyAmount = input.nextDouble();
+            }
 
+            weekData[i] = dailyAmount;
+        }
 
-        // -------------------------------------------------------------
-        // TODO 5: Create a WeeklyData object
-        //         Pass the weekData array into the constructor
-        // -------------------------------------------------------------
+        // Create WeeklyData object
+        WeeklyData budgetWeek = new WeeklyData(weekData);
 
+        // Display analysis
+        System.out.println("\n========== Weekly Summary ==========");
+        System.out.println("Total Spending: $" + budgetWeek.getTotal());
+        System.out.println("Average Daily Spending: $" + budgetWeek.getAverage());
+        System.out.println("Minimum Spending: $" + budgetWeek.getMin());
+        System.out.println("Maximum Spending: $" + budgetWeek.getMax());
 
-        // -------------------------------------------------------------
-        // TODO 6: Display the results of the analysis
-        //         Call methods from WeeklyData to display:
-        //         - Total
-        //         - Average
-        //         - Minimum
-        //         - Maximum
-        //
-        //         Use clear labels and formatted output if needed
-        // -------------------------------------------------------------
+        // Display full week data
+        System.out.println("\nDaily Breakdown:");
+        System.out.println(budgetWeek.toString());
 
+        // Budget insight
+        System.out.println("\n========== Budget Insight ==========");
 
-        // -------------------------------------------------------------
-        // TODO 7: Display the full week of data
-        //         Use the toString() method from WeeklyData
-        // -------------------------------------------------------------
+        double total = budgetWeek.getTotal();
 
+        if (total > budgetGoal) {
+            System.out.println("You went over your weekly budget.");
+            System.out.println("Try reducing daily spending next week.");
+        } 
+        else if (total < budgetGoal * 0.75) {
+            System.out.println("Great job! You stayed well under budget.");
+        } 
+        else {
+            System.out.println("Nice work! You stayed within your budget.");
+        }
 
-        // -------------------------------------------------------------
-        // TODO 8: Give the user insights about their week
-        //         --> "You need to drink more water next week!"
-        //         --> "You were very hydrated this week!"
-        //         --> etc.
-        // -------------------------------------------------------------
-
-
+        input.close();
     }
 }
