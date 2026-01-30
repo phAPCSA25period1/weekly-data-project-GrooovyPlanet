@@ -70,7 +70,5 @@ public class App {
         else {
             System.out.println("Nice work! You stayed within your budget.");
         }
-
-        input.close();
     }
 }
